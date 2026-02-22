@@ -17,6 +17,9 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1.1
         
+      - name: Restore NuGet Packages
+        run: |
+        
 
       - name: Build SQL Project
         run: |
