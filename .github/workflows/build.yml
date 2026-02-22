@@ -11,33 +11,30 @@ jobs:
     runs-on: windows-latest   
 
     steps:
-      # ✅ No change needed
+
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # ✅ No change needed
+      
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1.1
 
-      # ✅ NEW: Added NuGet setup (required for msbuild restore)
+      
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1
-
-      # ❌ Changed: dotnet restore → msbuild /t:Restore (fixes net472 error)
+        
       - name: Restore NuGet Packages
         run: |
           msbuild "Pratcise_SQL/Pratcise_SQL.sqlproj" `
             /t:Restore `
             /p:Configuration=Release
-
-      # ✅ No change needed
+     
       - name: Build SQL Project
         run: |
           msbuild "Pratcise_SQL/Pratcise_SQL.sqlproj" `
             /p:Configuration=Release `
             /p:Platform="Any CPU"
-
-      # ❌ Changed: Fixed artifact path (added subfolder + Any CPU)
+     
       - name: Upload DACPAC Artifact
         uses: actions/upload-artifact@v4
         with:
