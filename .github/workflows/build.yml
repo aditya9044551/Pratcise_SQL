@@ -20,7 +20,7 @@ jobs:
 
       - name: Build SQL Project
         run: |
-          msbuild Pratcise_SQL.sqlproj `
+           msbuild "Pratcise_SQL/Pratcise_SQL.sqlproj" `
             /p:Configuration=Release `
             /p:Platform="Any CPU"
 
