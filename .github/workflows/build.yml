@@ -9,7 +9,7 @@ jobs:
 
   build:
     name: Build DACPAC
-    runs-on: windows-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout Code
@@ -42,7 +42,7 @@ jobs:
 
   report:
     name: Generate Deployment Report
-    runs-on: windows-latest
+    runs-on: self-hosted
     needs: build
 
     steps:
@@ -74,7 +74,7 @@ jobs:
 
   deploy:
     name: Deploy DACPAC to SQL Server
-    runs-on: windows-latest
+    runs-on: self-hosted
     needs: report
     environment: production
 
