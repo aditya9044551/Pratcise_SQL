@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
- 
+
   build:
     name: Build DACPAC
     runs-on: windows-latest
@@ -39,10 +39,11 @@ jobs:
           name: dacpac
           path: Pratcise_SQL/bin/Any CPU/Release/Pratcise_SQL.dacpac
 
+
   report:
     name: Generate Deployment Report
     runs-on: windows-latest
-    needs: build                   
+    needs: build
 
     steps:
       - name: Download DACPAC Artifact
@@ -70,14 +71,14 @@ jobs:
           name: deployment-report
           path: ./deployment-report.xml
 
-        
+
+  deploy:
     name: Deploy DACPAC to SQL Server
     runs-on: windows-latest
-    needs: report                     # waits for report to finish
-    environment: production           # 🔒 requires manual approval in GitHub
+    needs: report
+    environment: production
 
-  
-   steps:
+    steps:
       - name: Download DACPAC Artifact
         uses: actions/download-artifact@v4
         with:
@@ -99,7 +100,7 @@ jobs:
 
       - name: Notify Success
         if: success()
-        run: echo "✅ DACPAC deployed successfully to ${{ secrets.SQL_DATABASE }}"
+        run: echo "✅ DACPAC deployed successfully"
 
       - name: Notify Failure
         if: failure()
