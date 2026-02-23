@@ -75,13 +75,13 @@ jobs:
         with:
           name: deployment-report
           path: ./deployment-report.xml
-          
+
       - name: Show Report in GitHub Summary
         run: |
-          echo "## 📊 Deployment Report" >> $env:GITHUB_STEP_SUMMARY
-          echo '```xml' >> $env:GITHUB_STEP_SUMMARY
-          Get-Content ./deployment-report.xml >> $env:GITHUB_STEP_SUMMARY
-          echo '```' >> $env:GITHUB_STEP_SUMMARY
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value "## Deployment Report"
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value '```xml'
+          Get-Content ./deployment-report.xml | Add-Content -Path $env:GITHUB_STEP_SUMMARY
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value '```'
 
   deploy:
     name: Deploy DACPAC to SQL Server
