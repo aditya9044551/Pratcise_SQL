@@ -67,6 +67,7 @@ jobs:
             /TargetDatabaseName:"${{ secrets.SQL_DATABASE }}" `
             /TargetUser:"${{ secrets.SQL_USERNAME }}" `
             /TargetPassword:"${{ secrets.SQL_PASSWORD }}" `
+            /TargetTrustServerCertificate:True `
             /OutputPath:"./deployment-report.xml"
 
       - name: Upload Deployment Report
@@ -104,6 +105,7 @@ jobs:
             /TargetDatabaseName:"${{ secrets.SQL_DATABASE }}" `
             /TargetUser:"${{ secrets.SQL_USERNAME }}" `
             /TargetPassword:"${{ secrets.SQL_PASSWORD }}" `
+            /TargetTrustServerCertificate:True `
             /p:BlockOnPossibleDataLoss=true
 
       - name: Notify Success
