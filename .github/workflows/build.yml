@@ -37,7 +37,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dacpac
-          path: Pratcise_SQL/bin/Any CPU/Release/Pratcise_SQL.dacpac
+          path: "Pratcise_SQL/bin/Any CPU/Release/Pratcise_SQL.dacpac"
 
 
   report:
@@ -53,11 +53,15 @@ jobs:
           path: ./dacpac
 
       - name: Install SqlPackage
-        run: dotnet tool install -g microsoft.sqlpackage
+        run: |
+          dotnet tool update -g microsoft.sqlpackage
+          $toolsPath = "$env:USERPROFILE\.dotnet\tools"
+          echo $toolsPath | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          $env:PATH += ";$toolsPath"
 
       - name: Generate Deployment Report
         run: |
-          sqlpackage /Action:DeployReport `
+          & "$env:USERPROFILE\.dotnet\tools\sqlpackage.exe" /Action:DeployReport `
             /SourceFile:"./dacpac/Pratcise_SQL.dacpac" `
             /TargetServerName:"${{ secrets.SQL_SERVER }}" `
             /TargetDatabaseName:"${{ secrets.SQL_DATABASE }}" `
@@ -86,11 +90,15 @@ jobs:
           path: ./dacpac
 
       - name: Install SqlPackage
-        run: dotnet tool install -g microsoft.sqlpackage
+        run: |
+          dotnet tool update -g microsoft.sqlpackage
+          $toolsPath = "$env:USERPROFILE\.dotnet\tools"
+          echo $toolsPath | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          $env:PATH += ";$toolsPath"
 
       - name: Deploy DACPAC to SQL Server
         run: |
-          sqlpackage /Action:Publish `
+          & "$env:USERPROFILE\.dotnet\tools\sqlpackage.exe" /Action:Publish `
             /SourceFile:"./dacpac/Pratcise_SQL.dacpac" `
             /TargetServerName:"${{ secrets.SQL_SERVER }}" `
             /TargetDatabaseName:"${{ secrets.SQL_DATABASE }}" `
